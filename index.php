@@ -26,7 +26,7 @@
             <!-- TODo: 22:20 -->
           </ul>
         </nav>
-        <a href="cart.html"><img src="images/cart.png" alt="" width="30px" height="30px" /></a>
+        <a href="cart.php"><img src="images/cart.png" alt="" width="30px" height="30px" /></a>
         <img src="images/menu.png" alt="" class="menu-icon" onclick="menutoggle()" />
       </div>
       <div class="row">
@@ -68,7 +68,7 @@
     <h2 class="title">Featured Products</h2>
     <div class="row">
       <div class="col-4">
-        <a href="product-details.html">
+        <a href="product-details.php">
           <img src="images/product-1.jpg" alt="" /></a>
         <h4>Red Printed T-shirt</h4>
         <div class="rating">

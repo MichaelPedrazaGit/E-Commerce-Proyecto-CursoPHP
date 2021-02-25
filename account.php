@@ -1,3 +1,9 @@
+<?php
+if (isset($_COOKIE['usernameCookie'])) {
+  header('Location: index.php');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,19 +51,59 @@
             <div class="form-btn">
               <span onclick="login()">Login</span>
               <span onclick="register()">Register</span>
-              <hr id="indicator" />
+              <hr id="indicator" <?php
+                                  if (isset($_COOKIE['userError']) || isset($_COOKIE['passwordError'])) {
+                                    echo 'style="transform: translateX(0px);"';
+                                  } else {
+                                    echo 'style="transform: translateX(100px);"';
+                                  }
+                                  ?> />
             </div>
-            <form action="" id="LoginForm">
-              <input type="text" placeholder="Username" />
-              <input type="password" placeholder="Password" />
-
+            <form action="./login.php" id="LoginForm" method="post" 
+              <?php
+                if (isset($_COOKIE['userError']) || isset($_COOKIE['passwordError'])) {
+                  echo 'style="transform: translateX(300px);"';
+                } else {
+                  echo 'style="transform: translateX(0px);"';
+                }
+              ?>
+            >
+              <input type="text" name="username" id="username" placeholder="Username" />
+              <input type="password" name="password" id="password" placeholder="Password" />
+              <p style="color:#FF0000" ;>
+                <?php if (isset($_COOKIE['userError'])) {
+                  echo "Username error";
+                } elseif (isset($_COOKIE['passwordError'])) {
+                  echo "Password error";
+                }
+                ?>
+              </p>
               <button type="submit" class="btn">Login</button>
               <a href="">Forgot Password</a>
             </form>
-            <form action="./register.php" id="RegForm" method="post">
+            <form action="./register.php" id="RegForm" method="post" 
+            <?php
+                if (isset($_COOKIE['userError']) || isset($_COOKIE['passwordError'])) {
+                  echo 'style="transform: translateX(300px);"';
+                } else {
+                  echo 'style="transform: translateX(0px);"';
+                }
+              ?>
+            >
+              <input type="text" name="name" id="name" placeholder="Name" required />
               <input type="text" name="username" id="username" placeholder="Username" required />
               <input type="email" name="email" id="email" placeholder="Email" required />
               <input type="password" name="password" id="password" placeholder="Password" required />
+              <p style="color:#FF0000" ;>
+                <?php if (isset($_COOKIE['userExists'])) {
+                  echo "User already exists";
+                } elseif (isset($_COOKIE['emailExists'])) {
+                  echo "Email already exists";
+                } elseif (isset($_COOKIE['errorCreate'])) {
+                  echo "Error when creating user";
+                }
+                ?>
+              </p>
 
               <button type="submit" class="btn">Register</button>
             </form>
@@ -127,8 +173,7 @@
       }
     }
   </script>
-  <!-- 
-js for toggle form -->
+  <!-- js for toggle form -->
   <script>
     var LoginForm = document.getElementById("LoginForm");
     var RegForm = document.getElementById("RegForm");
@@ -139,13 +184,12 @@ js for toggle form -->
       LoginForm.style.transform = "translateX(0px)";
       indicator.style.transform = "translateX(100px)";
     }
-
     function login() {
       RegForm.style.transform = "translateX(300px)";
       LoginForm.style.transform = "translateX(300px)";
       indicator.style.transform = "translateX(0px)";
     }
-  </script>
+    </script>
 </body>
 
 </html>
